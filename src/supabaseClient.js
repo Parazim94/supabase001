@@ -1,11 +1,22 @@
 import { createClient } from '@supabase/supabase-js'
+import 'dotenv/config'
 
-// Hier müssen Sie Ihre eigenen Supabase-Projekt-URL und den anon/public key eintragen
-const supabaseUrl = 'https://qaprhsbepwhhaxqoephn.supabase.co'
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFhcHJoc2JlcHdoaGF4cW9lcGhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ3MDM3NjUsImV4cCI6MjA2MDI3OTc2NX0.PfmU8RGkq4b_MAxWzcJmLYS1HuTj0apwpilkvyriHlk'
+// Laden der Umgebungsvariablen
+const supabaseUrl = process.env.SUPABASE_URL
+const supabaseKey = process.env.SUPABASE_ANON_KEY
+
+// Überprüfen, ob die Umgebungsvariablen verfügbar sind
+if (!supabaseUrl || !supabaseKey) {
+  console.error('❌ Supabase Umgebungsvariablen nicht gefunden!')
+  console.error('Bitte stelle sicher, dass die .env Datei existiert und die Variablen SUPABASE_URL und SUPABASE_ANON_KEY enthält.')
+  process.exit(1)
+}
 
 // Erstellen des Supabase-Clients
 export const supabase = createClient(supabaseUrl, supabaseKey)
+
+// Erfolgsmeldung
+console.log('✅ Supabase-Client erfolgreich konfiguriert')
 
 // Tipp: Speichern Sie die URL und den Key in einer .env-Datei für mehr Sicherheit
 // und laden Sie sie mit dotenv oder ähnlichen Paketen 
